@@ -30,7 +30,7 @@ if (!isset($environments[$branch])) {
 }
 
 foreach ($environments[$branch] as $environment) {
-    echo "Starting deployment for environment $environment...\n";
+    echo "\nStarting deployment for environment $environment...\n";
     passthru("eb deploy $environment");
-    echo "\nDevelopment for environment $environment has completed";
+    echo "\nDeployment for environment $environment has completed\n";
 }
