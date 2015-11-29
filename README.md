@@ -7,9 +7,10 @@ This document contains a small documentation on how to create an Elastic Beansta
 
 ## Installing AWS EB tools
 
-The first thing is to install the EB tools (this assume that Brew has been installed):
+The first thing is to install the EB tools (this assume that Brew has been installed), and boot2docker:
 
 * `brew install awsebcli`.
+* `brew install boot2docker`.
 * Verify that it works by typing the `eb` command in the terminal.
 
 ## Specifying the AWS IAM user
@@ -17,7 +18,7 @@ The first thing is to install the EB tools (this assume that Brew has been insta
 In order to being able to use the AWS tools, you will need to specify the IAM you need to use, as 
 [explained here](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-configuration.html#eb-cli3-credentials).
 
-## Creating the EB project
+## Preparing the EB project
 
 A typical Elastic Beanstalk project will look like this:
 
@@ -52,6 +53,31 @@ The `proxy` folder contains the Nginx configuration.
 The `.ebignore` is like a `.gitignore`, but is used by Elastic Beanstalk instead. For instance, you may want to add the `/vendor` folder into 
 the `.gitignore`, but not into the `.ebignore`, so that it's part of the deployed ZIP.
 
-Finally, the `Dockerrun.aws.json` file allows to configure the Docker configuration of the Elastic Beanstalk instance.
+Finally, the `Dockerrun.aws.json` file allows to configure the Docker configuration of the Elastic Beanstalk instance. In this skeleton,
+it creates a multi-container that uses a PHP7 customized image (that comes with Opcache, Intl, PdoMysql, PdoPgsql), as well as Nginx for
+webserver.
 
-For instance, here is a simple `Dockerrun.aws.json` file that allows to create
+## Creating the EB project
+
+### General
+
+* Create the project on Elastic Beanstalk console.
+* Create a new environment using the Elastic Beanstalk console for that project.
+* Once in the project, type `eb init`. This command will require to select the newly created project.
+* Type `eb use environmentName` in the given branch. This will tie the current branch to this EB environment. You could therefore create one
+"production" environment that will be tied to the master branch using the command `eb use production` while on the master branch, and a
+"development" environment that will be tied to the develop branch using the command `eb use develop` while on the develop branch.
+
+### Local
+
+In order to develop locally:
+
+* Type `eb local run`. This will launch `boot2docker` and replicate the environment by creating all the images specified in the
+`Dockerrun.aws.json` file.
+* Once you're done, type `Cmd + C` in order to properly shut down all the resources.
+
+### Deploy
+
+In order to deploy:
+
+* Type `eb deploy`. You can also deploy to a specific environment by doing `eb deploy environmentName`.
