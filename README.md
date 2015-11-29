@@ -74,6 +74,9 @@ In order to develop locally:
 
 * Type `eb local run`. This will launch `boot2docker` and replicate the environment by creating all the images specified in the
 `Dockerrun.aws.json` file.
+* Open a new terminal tab and type `eb local open`. This will open the browser.
+* If the project needs to specify environment variables (typically, the database connection info), you can set them locally using the
+`setenv` command. For instance: `eb local setenv RDS_HOSTNAME=url RDS_PORT=3306 RDS_USERNAME=my_username RDS_PASSWORD=my_password RDS_DB_NAME=test`
 * Once you're done, type `Cmd + C` in order to properly shut down all the resources.
 
 ### Deploy
