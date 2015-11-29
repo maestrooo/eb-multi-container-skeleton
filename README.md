@@ -84,3 +84,10 @@ In order to develop locally:
 In order to deploy:
 
 * Type `eb deploy`. You can also deploy to a specific environment by doing `eb deploy environmentName`.
+
+If your product contains multiple environments that share the same code (for instance a worker and webserver environments), unfortunately
+EB CLI does not allow to deploy the exact same code to multiple environments. To that extent, this skeleton comes with a small utility called
+so that you can map one branch to multiple named environments.
+
+* First, customize the `deploy.php` file to your needs.
+* Then, type the `deploy.php` command.
